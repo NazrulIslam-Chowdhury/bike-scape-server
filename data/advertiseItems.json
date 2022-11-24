@@ -1,0 +1,44 @@
+[
+    {
+        "item_id": "01",
+        "name": "Nazrul Islam Chowdhury",
+        "brand": "Yamaha",
+        "quality": "fresh",
+        "resale_price": 435000,
+        "original_price": 570000,
+        "model": "R15M",
+        "image_url": "https://www.yamaha-motor.com.au/-/media/products/motorcycle/road/supersport/2023/yzf-r15mp/product-category--thumbnail/2023_yzf-r15m_wmb_aus_stu_003_750x600.ashx",
+        "used": "1y",
+        "location": "chowmuhani,Noakhali",
+        "published_date": "24/11/2022",
+        "details": "Engine:150 Cc,Power:18.4 BHP,Torque:14.2 NM,Mileage:40 Kmpl,Brakes:Dual Channel ABS,Tyre TypeTubeless"
+    },
+    {
+        "item_id": "02",
+        "name": "Nazrul Islam Chowdhury",
+        "brand": "Suzuki",
+        "quality": "fresh",
+        "resale_price": 335000,
+        "original_price": 429900,
+        "model": "GSX-R150 ABS",
+        "image_url": "https://www.suzuki.com.bd/images/bike_models/variant_color_images/variant_color_image__160682555276344.png",
+        "used": "1y",
+        "location": "chowmuhani,Noakhali",
+        "published_date": "24/11/2022",
+        "details": "Engine:150 Cc,Power:18.4 BHP,Torque:14.2 NM,Mileage:40 Kmpl,Brakes:Dual Channel ABS,Tyre TypeTubeless"
+    },
+    {
+        "item_id": "01",
+        "name": "Nazrul Islam Chowdhury",
+        "brand": "Honda",
+        "quality": "fresh",
+        "resale_price": 425000,
+        "original_price": 550000,
+        "model": "CB150R Exmotion",
+        "image_url": "https://imgd.aeplcdn.com/1280x720/bw/ec/37336/Honda-CBR150-R-Action-142837.jpg?wm=0",
+        "used": "1y",
+        "location": "chowmuhani,Noakhali",
+        "published_date": "24/11/2022",
+        "details": "Engine:150 Cc,Power:18.4 BHP,Torque:14.2 NM,Mileage:40 Kmpl,Brakes:Dual Channel ABS,Tyre TypeTubeless"
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "category_id": "01",
+        "category": "Sports Bike"
+    },
+    {
+        "category_id": "02",
+        "category": "Scooter"
+    },
+    {
+        "category_id": "03",
+        "category": "Touring Bike"
+    }
+]

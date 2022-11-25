@@ -20,6 +20,7 @@ async function run() {
         const advertiseItemsCollection = client.db('bikeScape').collection('sellingItems');
         const bikeCategoryCollection = client.db('bikeScape').collection('bikeCategory');
         const usersCollection = client.db('bikeScape').collection('users');
+        const bookingsCollection = client.db('bikeScape').collection('bookings');
 
         app.get('/advertise', async (req, res) => {
             const query = {};
@@ -47,6 +48,13 @@ async function run() {
             const users = req.body;
             const user = await usersCollection.insertOne(users);
             res.send(user);
+        })
+
+        // bookings
+        app.post('/bookings', async (req, res) => {
+            const bookings = req.body;
+            const booking = await bookingsCollection.insertOne(bookings);
+            res.send(booking);
         })
     }
     finally {

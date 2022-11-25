@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
 require('dotenv').config();
@@ -17,13 +17,13 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try {
-        const sellingItemsCollection = client.db('bikeScape').collection('sellingItems');
+        const advertiseItemsCollection = client.db('bikeScape').collection('sellingItems');
         const bikeCategoryCollection = client.db('bikeScape').collection('bikeCategory');
         const usersCollection = client.db('bikeScape').collection('users');
 
         app.get('/advertise', async (req, res) => {
             const query = {};
-            const result = await sellingItemsCollection.find(query).toArray();
+            const result = await advertiseItemsCollection.find(query).toArray();
             res.send(result);
         })
 
@@ -32,6 +32,13 @@ async function run() {
         app.get('/category', async (req, res) => {
             const query = {};
             const result = await bikeCategoryCollection.find(query).toArray();
+            res.send(result);
+        })
+
+        app.get('/category/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const result = await bikeCategoryCollection.findOne(filter);
             res.send(result);
         })
 

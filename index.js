@@ -19,6 +19,7 @@ async function run() {
     try {
         const sellingItemsCollection = client.db('bikeScape').collection('sellingItems');
         const bikeCategoryCollection = client.db('bikeScape').collection('bikeCategory');
+        const usersCollection = client.db('bikeScape').collection('users');
 
         app.get('/advertise', async (req, res) => {
             const query = {};
@@ -26,10 +27,19 @@ async function run() {
             res.send(result);
         })
 
+
+        // category api
         app.get('/category', async (req, res) => {
             const query = {};
             const result = await bikeCategoryCollection.find(query).toArray();
             res.send(result);
+        })
+
+        // users
+        app.post('/users', async (req, res) => {
+            const users = req.body;
+            const user = await usersCollection.insertOne(users);
+            res.send(user);
         })
     }
     finally {

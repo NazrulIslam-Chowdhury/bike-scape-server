@@ -96,6 +96,13 @@ async function run() {
             res.send({ isSeller: seller?.activity === 'Seller' });
         })
 
+        app.get('/users/admin/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email };
+            const admin = await usersCollection.findOne(query);
+            res.send({ isAdmin: admin?.role === 'Admin' });
+        })
+
         // bookings
         app.post('/bookings', async (req, res) => {
             const bookings = req.body;

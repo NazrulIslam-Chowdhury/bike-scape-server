@@ -50,12 +50,33 @@ async function run() {
             res.send(user);
         })
 
+        app.get('/users/buyer/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email };
+            const buyer = await usersCollection.findOne(query);
+            res.send({ isBuyer: buyer?.activity === 'Buyer' });
+        })
+
         // bookings
         app.post('/bookings', async (req, res) => {
             const bookings = req.body;
             const booking = await bookingsCollection.insertOne(bookings);
             res.send(booking);
         })
+
+        app.get('/bookings', async (req, res) => {
+            const email = req.query.email;
+            const query = { email };
+            const result = await bookingsCollection.find(query).toArray();
+            res.send(result);
+        })
+
+        // app.delete('/bookings/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: ObjectId(id) };
+        //     const result = await bookingsCollection.deleteOne(query);
+        //     res.send(result);
+        // })
     }
     finally {
 

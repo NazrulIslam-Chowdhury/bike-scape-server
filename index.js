@@ -70,18 +70,28 @@ async function run() {
 
         })
 
+        // all buyers
         app.get('/users/all-buyers', async (req, res) => {
             const query = { activity: 'Buyer' };
             const buyers = await usersCollection.find(query).toArray()
             res.send(buyers);
         })
 
+        app.delete('/users/all-buyers/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await usersCollection.deleteOne(query);
+            res.send(result);
+        })
+
+        // all sellers
         app.get('/users/all-sellers', async (req, res) => {
             const query = { activity: 'Seller' };
             const sellers = await usersCollection.find(query).toArray();
             res.send(sellers);
         })
 
+        // buyer,seller and admin email api
         app.get('/users/buyer/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email };

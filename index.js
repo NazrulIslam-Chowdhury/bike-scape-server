@@ -56,12 +56,19 @@ async function run() {
             res.send(result);
         })
 
-        // app.put('/users/admin/:id',async(req,res)=>{
-        //     const id = req.params.id;
-        //     const query = {_id:ObjectId(id)};
-        //     const result = await usersCollection.findOne(query);
+        app.put('/users/admin/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const option = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    role: "Admin"
+                }
+            }
+            const result = await usersCollection.updateOne(query, updatedDoc, option);
+            res.send(result);
 
-        // })
+        })
 
         app.get('/users/all-buyers', async (req, res) => {
             const query = { activity: 'Buyer' };

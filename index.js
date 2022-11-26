@@ -50,6 +50,19 @@ async function run() {
             res.send(user);
         })
 
+        app.get('/users', async (req, res) => {
+            const query = {};
+            const result = await usersCollection.find(query).toArray();
+            res.send(result);
+        })
+
+        // app.put('/users/admin/:id',async(req,res)=>{
+        //     const id = req.params.id;
+        //     const query = {_id:ObjectId(id)};
+        //     const result = await usersCollection.findOne(query);
+
+        // })
+
         app.get('/users/all-buyers', async (req, res) => {
             const query = { activity: 'Buyer' };
             const buyers = await usersCollection.find(query).toArray()

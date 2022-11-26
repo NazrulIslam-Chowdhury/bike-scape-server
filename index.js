@@ -57,6 +57,13 @@ async function run() {
             res.send({ isBuyer: buyer?.activity === 'Buyer' });
         })
 
+        app.get('/users/seller/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email }
+            const seller = await usersCollection.findOne(query);
+            res.send({ isSeller: seller?.activity === 'Seller' });
+        })
+
         // bookings
         app.post('/bookings', async (req, res) => {
             const bookings = req.body;

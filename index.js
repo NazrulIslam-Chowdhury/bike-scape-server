@@ -50,6 +50,12 @@ async function run() {
             res.send(user);
         })
 
+        app.get('/users/all-buyers', async (req, res) => {
+            const query = { activity: 'Buyer' };
+            const buyers = await usersCollection.find(query).toArray()
+            res.send(buyers);
+        })
+
         app.get('/users/buyer/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email };

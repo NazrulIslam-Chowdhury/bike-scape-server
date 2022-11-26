@@ -91,6 +91,13 @@ async function run() {
             res.send(sellers);
         })
 
+        app.delete('/users/all-sellers/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await usersCollection.deleteOne(query);
+            res.send(result);
+        })
+
         // buyer,seller and admin email api
         app.get('/users/buyer/:email', async (req, res) => {
             const email = req.params.email;

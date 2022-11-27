@@ -17,14 +17,15 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try {
-        const advertiseItemsCollection = client.db('bikeScape').collection('sellingItems');
+        const sellingItemsCollection = client.db('bikeScape').collection('sellingItems');
         const bikeCategoryCollection = client.db('bikeScape').collection('bikeCategory');
         const usersCollection = client.db('bikeScape').collection('users');
         const bookingsCollection = client.db('bikeScape').collection('bookings');
+        const reportedItemsCollection = client.db('bikeScape').collection('report');
 
         app.get('/advertise', async (req, res) => {
             const query = {};
-            const result = await advertiseItemsCollection.find(query).toArray();
+            const result = await sellingItemsCollection.find(query).limit(3).toArray();
             res.send(result);
         })
 
@@ -36,11 +37,39 @@ async function run() {
             res.send(result);
         })
 
-        app.get('/category/:id', async (req, res) => {
+        // app.get('/category/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const filter = { _id: ObjectId(id) };
+        //     const result = await bikeCategoryCollection.findOne(filter);
+        //     res.send(result);
+        // })
+
+        // all products
+        app.get('/bikes/:id', async (req, res) => {
             const id = req.params.id;
-            const filter = { _id: ObjectId(id) };
-            const result = await bikeCategoryCollection.findOne(filter);
-            res.send(result);
+            console.log(id)
+            if (id === "638331e4c0624e6f81d0952a") {
+                const query = { category_name: "sports bike" };
+                const sports = await sellingItemsCollection.find(query).toArray();
+                res.send(sports);
+            }
+            else if (id === "638331e4c0624e6f81d0952b") {
+                const query = { category_name: "scooter" };
+                const scooter = await sellingItemsCollection.find(query).toArray();
+                res.send(scooter);
+            }
+            else {
+                const query = { category_name: "touring bike" };
+                const touring = await sellingItemsCollection.find(query).toArray();
+                res.send(touring);
+            }
+        })
+
+        // seller's products
+        app.post('/bikes', async (req, res) => {
+            const product = req.body;
+            const products = await sellingItemsCollection.insertOne(product);
+            res.send(products);
         })
 
         // users
@@ -138,6 +167,26 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await bookingsCollection.deleteOne(query);
+            res.send(result);
+        })
+
+        // reported items
+        app.post('/report-items', async (req, res) => {
+            const items = req.body;
+            const result = await reportedItemsCollection.insertOne(items);
+            res.send(result);
+        })
+
+        app.get('/report-items', async (req, res) => {
+            const query = {};
+            const result = await reportedItemsCollection.find(query).toArray();
+            res.send(result);
+        })
+
+        app.delete('/report-items/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await reportedItemsCollection.deleteOne(query);
             res.send(result);
         })
     }

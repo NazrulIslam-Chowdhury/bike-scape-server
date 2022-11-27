@@ -1,17 +1,14 @@
 [
     {
-        "category_id": "01",
-        "category": "Sports Bike",
+        "category_name": "Sports Bike",
         "img": "https://wallpapercave.com/wp/wp1898350.jpg"
     },
     {
-        "category_id": "02",
-        "category": "Scooter",
+        "category_name": "Scooter",
         "img": "https://wallpaperaccess.com/full/1708441.jpg"
     },
     {
-        "category_id": "03",
-        "category": "Touring Bike",
+        "category_name": "Touring Bike",
         "img": "https://www.cycleworld.com/resizer/zF529PZFQ5Hj3wfdhCY6VWsQCRo=/1200x1200/cloudfront-us-east-1.images.arcpublishing.com/octane/L3BWX6QLESJ7RS3IC6SYUQAZ34.jpg"
     }
 ]

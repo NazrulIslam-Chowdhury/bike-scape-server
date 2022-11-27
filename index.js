@@ -72,6 +72,20 @@ async function run() {
             res.send(products);
         })
 
+        app.get('/bikes', async (req, res) => {
+            const email = req.query.email;
+            const query = { email };
+            const result = await sellingItemsCollection.find(query).toArray();
+            res.send(result);
+        })
+
+        app.delete('/bikes/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await sellingItemsCollection.deleteOne(query);
+            res.send(result);
+        })
+
         // users
         app.post('/users', async (req, res) => {
             const users = req.body;

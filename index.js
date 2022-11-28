@@ -45,7 +45,7 @@ async function run() {
         // all products
         app.get('/bikes/:id', async (req, res) => {
             const id = req.params.id;
-            console.log(id)
+            // console.log(id)
             if (id === "638331e4c0624e6f81d0952a") {
                 const query = { category_name: "sports bike" };
                 const sports = await sellingItemsCollection.find(query).toArray();

@@ -132,6 +132,20 @@ async function run() {
             res.send(sellers);
         })
 
+        app.put('/users/verify-seller/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id), activity: 'Seller' };
+            const option = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    verify: true
+                }
+            }
+            const result = await usersCollection.updateOne(query, updatedDoc, option);
+            res.send(result);
+
+        })
+
         app.delete('/users/all-sellers/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };

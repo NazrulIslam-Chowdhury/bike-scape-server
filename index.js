@@ -1,15 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const stripe = require("stripe")('sk_test_51M6x6lF6tcNk03pC1gB0nTLnPPxzGsCYwC9ewG9oPjF2OkYcgHWEGeYdnXkJKFcFI8m9MucyFB48evbWqlHvy6B900UeNRoLjP');
 const app = express();
+
 const port = process.env.PORT || 5000;
+
 require('dotenv').config();
+
 
 
 // middleware
 app.use(cors());
 app.use(express.json());
-
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hnlrj23.mongodb.net/?retryWrites=true&w=majority`;
@@ -22,6 +25,7 @@ async function run() {
         const usersCollection = client.db('bikeScape').collection('users');
         const bookingsCollection = client.db('bikeScape').collection('bookings');
         const reportedItemsCollection = client.db('bikeScape').collection('report');
+        const paymentCollection = client.db('bikeScape').collection('payments')
 
         app.get('/advertise', async (req, res) => {
             const query = {};
@@ -37,12 +41,6 @@ async function run() {
             res.send(result);
         })
 
-        // app.get('/category/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const filter = { _id: ObjectId(id) };
-        //     const result = await bikeCategoryCollection.findOne(filter);
-        //     res.send(result);
-        // })
 
         // all products
         app.get('/bikes/:id', async (req, res) => {
@@ -177,10 +175,51 @@ async function run() {
             res.send(result);
         })
 
+        app.get('/bookings/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await bookingsCollection.findOne(query);
+            res.send(result);
+        })
+
         app.delete('/bookings/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await bookingsCollection.deleteOne(query);
+            res.send(result);
+        })
+
+        // payment api
+        app.post('/create-payment-intent', async (req, res) => {
+            const booking = req.body;
+            const price = booking.price;
+            const amount = price * 100;
+
+            const paymentIntent = await stripe.paymentIntents.create({
+                currency: 'bdt',
+                amount: amount,
+                "payment_method_types": [
+                    "card"
+                ]
+            });
+
+            res.send({
+                clientSecret: paymentIntent.client_secret,
+            });
+        });
+
+        app.post('/payments', async (req, res) => {
+            const payment = req.body;
+            const result = await paymentCollection.insertOne(payment);
+            const id = payment.bookingId
+            const query = { _id: ObjectId(id) };
+            const updatedDoc = {
+                $set: {
+                    paid: true,
+                    transactionId: payment.transactionId
+                }
+            }
+            const updateResult = await bookingsCollection.updateOne(query, updatedDoc);
             res.send(result);
         })
 
